@@ -54,13 +54,13 @@
             <ImageView
                 android:id="@+id/ivLogo"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/base_margin_x6"
+                android:layout_height="@dimen/base_margin_x5"
                 android:layout_above="@id/ivAvatar"
                 android:layout_centerHorizontal="true"
                 android:adjustViewBounds="true"
                 android:visibility="invisible"
                 android:scaleType="fitCenter"
-                android:layout_marginBottom="@dimen/base_margin_x5"
+                android:layout_marginBottom="@dimen/base_margin_x3_5"
                 android:src="@drawable/ic_logo"
                 tools:ignore="ContentDescription" />
 
