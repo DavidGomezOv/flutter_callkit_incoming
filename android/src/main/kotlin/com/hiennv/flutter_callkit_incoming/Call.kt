@@ -83,6 +83,7 @@ data class Data(val args: Map<String, Any?>) {
         val bundle = Bundle()
         bundle.putString(CallkitIncomingBroadcastReceiver.EXTRA_CALLKIT_ID, id)
         bundle.putString(CallkitIncomingBroadcastReceiver.EXTRA_CALLKIT_NAME_CALLER, nameCaller)
+        bundle.putString(CallkitIncomingBroadcastReceiver.EXTRA_CALLKIT_APP_NAME, appName)
         bundle.putString(CallkitIncomingBroadcastReceiver.EXTRA_CALLKIT_HANDLE, handle)
         bundle.putString(CallkitIncomingBroadcastReceiver.EXTRA_CALLKIT_AVATAR, avatar)
         bundle.putInt(CallkitIncomingBroadcastReceiver.EXTRA_CALLKIT_TYPE, type)
