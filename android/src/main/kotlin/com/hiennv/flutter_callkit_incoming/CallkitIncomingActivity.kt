@@ -25,7 +25,6 @@ import android.widget.TextView
 import com.hiennv.flutter_callkit_incoming.CallkitIncomingBroadcastReceiver.Companion.ACTION_CALL_INCOMING
 import com.hiennv.flutter_callkit_incoming.CallkitIncomingBroadcastReceiver.Companion.EXTRA_CALLKIT_AVATAR
 import com.hiennv.flutter_callkit_incoming.CallkitIncomingBroadcastReceiver.Companion.EXTRA_CALLKIT_BACKGROUND_URL
-import com.hiennv.flutter_callkit_incoming.CallkitIncomingBroadcastReceiver.Companion.EXTRA_CALLKIT_BACKGROUND_COLOR
 import com.hiennv.flutter_callkit_incoming.CallkitIncomingBroadcastReceiver.Companion.EXTRA_CALLKIT_DURATION
 import com.hiennv.flutter_callkit_incoming.CallkitIncomingBroadcastReceiver.Companion.EXTRA_CALLKIT_INCOMING_DATA
 import com.hiennv.flutter_callkit_incoming.CallkitIncomingBroadcastReceiver.Companion.EXTRA_CALLKIT_NAME_CALLER
@@ -203,11 +202,6 @@ class CallkitIncomingActivity : Activity() {
         val textDecline = data?.getString(EXTRA_CALLKIT_TEXT_DECLINE, "")
         tvDecline.text = if (TextUtils.isEmpty(textDecline)) getString(R.string.text_decline) else textDecline
 
-        val backgroundColor = data?.getString(EXTRA_CALLKIT_BACKGROUND_COLOR, "#0955fa")
-        try {
-            ivBackground.setBackgroundColor(Color.parseColor(backgroundColor))
-        } catch (error: Exception) {
-        }
         var backgroundUrl = data?.getString(EXTRA_CALLKIT_BACKGROUND_URL, "")
         if (backgroundUrl != null && backgroundUrl.isNotEmpty()) {
             if (!backgroundUrl.startsWith("http://", true) && !backgroundUrl.startsWith("https://", true)){
