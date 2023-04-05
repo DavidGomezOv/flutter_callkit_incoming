@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="text_accept">Aceitar</string>
-    <string name="text_decline">Declínio</string>
-    <string name="text_missed_call">Chamada perdida</string>
-    <string name="text_call_back">Ligar de volta</string>
-</resources>
