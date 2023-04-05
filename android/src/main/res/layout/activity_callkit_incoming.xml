@@ -57,6 +57,7 @@
                 android:layout_height="@dimen/base_margin_x5"
                 android:layout_above="@id/ivAvatar"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/base_margin"
                 android:layout_marginBottom="@dimen/base_margin_x3_5"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
@@ -70,10 +71,10 @@
                 android:layout_width="@dimen/size_avatar"
                 android:layout_height="@dimen/size_avatar"
                 android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/base_margin"
                 android:src="@drawable/ic_default_avatar"
                 app:civ_border_color="#80ffffff"
                 app:civ_border_width="1dp" />
-
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -102,7 +103,9 @@
                     app:autoSizeTextType="uniform"
                     tools:ignore="MissingPrefix"
                     tools:targetApi="o"
-                    tools:text="Caller Name" />
+                    tools:text="Caller Name"
+                    android:fontFamily="@font/montserrat_semibold"
+                    app:fontFamily="@font/montserrat_semibold"/>
 
                 <TextView
                     android:id="@+id/tvNumber"
@@ -113,7 +116,9 @@
                     android:maxLines="1"
                     android:textColor="@color/action_text"
                     android:textSize="@dimen/size_text_action"
-                    tools:text="Some info" />
+                    tools:text="Some info"
+                    android:fontFamily="@font/montserrat_regular"
+                    app:fontFamily="@font/montserrat_regular"/>
 
             </LinearLayout>
 
@@ -167,7 +172,7 @@
                         android:gravity="center"
                         android:text="@string/text_accept"
                         android:textColor="@color/action_text"
-                        android:textSize="@dimen/size_text_action" />
+                        android:textSize="@dimen/size_text_buttons" />
 
 
                 </com.hiennv.flutter_callkit_incoming.widgets.RippleRelativeLayout>
@@ -212,7 +217,7 @@
                         android:gravity="center"
                         android:text="@string/text_decline"
                         android:textColor="@color/action_text"
-                        android:textSize="@dimen/size_text_action" />
+                        android:textSize="@dimen/size_text_buttons" />
 
                 </com.hiennv.flutter_callkit_incoming.widgets.RippleRelativeLayout>
 
