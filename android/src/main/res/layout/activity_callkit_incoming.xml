@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@id/ivAvatar"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/base_margin_x1_5"
+                android:layout_marginTop="@dimen/base_margin_half"
                 android:layout_marginBottom="@dimen/base_margin_x4_8"
                 android:adjustViewBounds="true"
                 android:maxWidth="65dp"
