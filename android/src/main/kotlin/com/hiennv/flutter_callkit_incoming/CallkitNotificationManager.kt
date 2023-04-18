@@ -111,7 +111,7 @@ class CallkitNotificationManager(private val context: Context) {
         notificationBuilder.setOnlyAlertOnce(true)
         notificationBuilder.setSound(null)
         notificationBuilder.setFullScreenIntent(
-            getActivityPendingIntent(notificationId, data), true
+                getActivityPendingIntent(notificationId, data), true
         )
         notificationBuilder.setContentIntent(getActivityPendingIntent(notificationId, data))
         notificationBuilder.setDeleteIntent(getTimeOutPendingIntent(notificationId, data))
@@ -133,11 +133,10 @@ class CallkitNotificationManager(private val context: Context) {
         notificationBuilder.setChannelId(NOTIFICATION_CHANNEL_ID_INCOMING)
         notificationBuilder.priority = NotificationCompat.PRIORITY_MAX
         val isCustomNotification = data.getBoolean(EXTRA_CALLKIT_IS_CUSTOM_NOTIFICATION, false)
-        val isCustomSmallExNotification =
-            data.getBoolean(EXTRA_CALLKIT_IS_CUSTOM_SMALL_EX_NOTIFICATION, false)
+        val isCustomSmallExNotification = data.getBoolean(EXTRA_CALLKIT_IS_CUSTOM_SMALL_EX_NOTIFICATION, false)
         if (isCustomNotification) {
             notificationViews =
-                RemoteViews(context.packageName, R.layout.layout_custom_notification)
+                    RemoteViews(context.packageName, R.layout.layout_custom_notification)
             initNotificationViews(notificationViews!!, data)
 
             if ((Build.MANUFACTURER.equals(
@@ -146,11 +145,11 @@ class CallkitNotificationManager(private val context: Context) {
                 ) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) || isCustomSmallExNotification
             ) {
                 notificationSmallViews =
-                    RemoteViews(context.packageName, R.layout.layout_custom_small_ex_notification)
+                        RemoteViews(context.packageName, R.layout.layout_custom_small_ex_notification)
                 initNotificationViews(notificationSmallViews!!, data)
             } else {
                 notificationSmallViews =
-                    RemoteViews(context.packageName, R.layout.layout_custom_small_notification)
+                        RemoteViews(context.packageName, R.layout.layout_custom_small_notification)
                 initNotificationViews(notificationSmallViews!!, data)
             }
 
@@ -162,24 +161,24 @@ class CallkitNotificationManager(private val context: Context) {
             val avatarUrl = data.getString(EXTRA_CALLKIT_AVATAR, "")
             if (avatarUrl != null && avatarUrl.isNotEmpty()) {
                 val headers =
-                    data.getSerializable(CallkitIncomingBroadcastReceiver.EXTRA_CALLKIT_HEADERS) as HashMap<String, Any?>
+                        data.getSerializable(CallkitIncomingBroadcastReceiver.EXTRA_CALLKIT_HEADERS) as HashMap<String, Any?>
                 getPicassoInstance(context, headers).load(avatarUrl)
-                    .into(targetLoadAvatarDefault)
+                        .into(targetLoadAvatarDefault)
             }
             notificationBuilder.setContentTitle(data.getString(EXTRA_CALLKIT_NAME_CALLER, ""))
             notificationBuilder.setContentText(data.getString(EXTRA_CALLKIT_HANDLE, ""))
             val textDecline = data.getString(EXTRA_CALLKIT_TEXT_DECLINE, "")
             val declineAction: NotificationCompat.Action = NotificationCompat.Action.Builder(
-                R.drawable.ic_decline,
-                if (TextUtils.isEmpty(textDecline)) context.getString(R.string.text_decline) else textDecline,
-                getDeclinePendingIntent(notificationId, data)
+                    R.drawable.ic_decline,
+                    if (TextUtils.isEmpty(textDecline)) context.getString(R.string.text_decline) else textDecline,
+                    getDeclinePendingIntent(notificationId, data)
             ).build()
             notificationBuilder.addAction(declineAction)
             val textAccept = data.getString(EXTRA_CALLKIT_TEXT_ACCEPT, "")
             val acceptAction: NotificationCompat.Action = NotificationCompat.Action.Builder(
-                R.drawable.ic_accept,
-                if (TextUtils.isEmpty(textDecline)) context.getString(R.string.text_accept) else textAccept,
-                getAcceptPendingIntent(notificationId, data)
+                    R.drawable.ic_accept,
+                    if (TextUtils.isEmpty(textDecline)) context.getString(R.string.text_accept) else textAccept,
+                    getAcceptPendingIntent(notificationId, data)
             ).build()
             notificationBuilder.addAction(acceptAction)
         }
@@ -189,31 +188,35 @@ class CallkitNotificationManager(private val context: Context) {
     }
 
     private fun initNotificationViews(remoteViews: RemoteViews, data: Bundle) {
+        remoteViews.setTextViewText(
+                R.id.tvNameCaller,
+                data.getString(EXTRA_CALLKIT_NAME_CALLER, "")
+        )
         remoteViews.setOnClickPendingIntent(
-            R.id.llDecline,
-            getDeclinePendingIntent(notificationId, data)
+                R.id.llDecline,
+                getDeclinePendingIntent(notificationId, data)
         )
         val textDecline = data.getString(EXTRA_CALLKIT_TEXT_DECLINE, "")
         remoteViews.setTextViewText(
-            R.id.tvDecline,
-            if (TextUtils.isEmpty(textDecline)) context.getString(R.string.text_decline) else textDecline
+                R.id.tvDecline,
+                if (TextUtils.isEmpty(textDecline)) context.getString(R.string.text_decline) else textDecline
         )
         remoteViews.setOnClickPendingIntent(
-            R.id.llAccept,
-            getAcceptPendingIntent(notificationId, data)
+                R.id.llAccept,
+                getAcceptPendingIntent(notificationId, data)
         )
         val textAccept = data.getString(EXTRA_CALLKIT_TEXT_ACCEPT, "")
         remoteViews.setTextViewText(
-            R.id.tvAccept,
-            if (TextUtils.isEmpty(textAccept)) context.getString(R.string.text_accept) else textAccept
+                R.id.tvAccept,
+                if (TextUtils.isEmpty(textAccept)) context.getString(R.string.text_accept) else textAccept
         )
         val avatarUrl = data.getString(EXTRA_CALLKIT_AVATAR, "")
         if (avatarUrl != null && avatarUrl.isNotEmpty()) {
             val headers =
-                data.getSerializable(CallkitIncomingBroadcastReceiver.EXTRA_CALLKIT_HEADERS) as HashMap<String, Any?>
+                    data.getSerializable(CallkitIncomingBroadcastReceiver.EXTRA_CALLKIT_HEADERS) as HashMap<String, Any?>
             getPicassoInstance(context, headers).load(avatarUrl)
-                .transform(CircleTransform())
-                .into(targetLoadAvatarCustomize)
+                    .transform(CircleTransform())
+                    .into(targetLoadAvatarCustomize)
         }
     }
 
@@ -246,32 +249,27 @@ class CallkitNotificationManager(private val context: Context) {
         val isCustomNotification = data.getBoolean(EXTRA_CALLKIT_IS_CUSTOM_NOTIFICATION, false)
         if (isCustomNotification) {
             notificationViews =
-                RemoteViews(context.packageName, R.layout.layout_custom_miss_notification)
-            notificationViews?.setOnClickPendingIntent(
-                R.id.llCallback,
-                getCallbackPendingIntent(notificationId, data)
-            )
-            val isShowCallback = data.getBoolean(
-                CallkitIncomingBroadcastReceiver.EXTRA_CALLKIT_IS_SHOW_CALLBACK,
-                true
-            )
-            notificationViews?.setViewVisibility(
-                R.id.llCallback,
-                if (isShowCallback) View.VISIBLE else View.GONE
-            )
-            val textCallback = data.getString(EXTRA_CALLKIT_TEXT_CALLBACK, "")
+                    RemoteViews(context.packageName, R.layout.layout_custom_miss_notification)
             notificationViews?.setTextViewText(
-                R.id.tvCallback,
-                if (TextUtils.isEmpty(textCallback)) context.getString(R.string.text_call_back) else textCallback
+                    R.id.tvNameCaller,
+                    data.getString(EXTRA_CALLKIT_NAME_CALLER, "")
             )
+            notificationViews?.setOnClickPendingIntent(
+                    R.id.llCallback,
+                    getCallbackPendingIntent(notificationId, data)
+            )
+            val isShowCallback = data.getBoolean(CallkitIncomingBroadcastReceiver.EXTRA_CALLKIT_IS_SHOW_CALLBACK, true)
+            notificationViews?.setViewVisibility(R.id.llCallback, if (isShowCallback) View.VISIBLE else View.GONE)
+            val textCallback = data.getString(EXTRA_CALLKIT_TEXT_CALLBACK, "")
+            notificationViews?.setTextViewText(R.id.tvCallback, if (TextUtils.isEmpty(textCallback)) context.getString(R.string.text_call_back) else textCallback)
 
             val avatarUrl = data.getString(EXTRA_CALLKIT_AVATAR, "")
             if (avatarUrl != null && avatarUrl.isNotEmpty()) {
                 val headers =
-                    data.getSerializable(CallkitIncomingBroadcastReceiver.EXTRA_CALLKIT_HEADERS) as HashMap<String, Any?>
+                        data.getSerializable(CallkitIncomingBroadcastReceiver.EXTRA_CALLKIT_HEADERS) as HashMap<String, Any?>
 
                 getPicassoInstance(context, headers).load(avatarUrl)
-                    .transform(CircleTransform()).into(targetLoadAvatarCustomize)
+                        .transform(CircleTransform()).into(targetLoadAvatarCustomize)
             }
             notificationBuilder.setStyle(NotificationCompat.DecoratedCustomViewStyle())
             notificationBuilder.setCustomContentView(notificationViews)
@@ -282,21 +280,18 @@ class CallkitNotificationManager(private val context: Context) {
             val avatarUrl = data.getString(EXTRA_CALLKIT_AVATAR, "")
             if (avatarUrl != null && avatarUrl.isNotEmpty()) {
                 val headers =
-                    data.getSerializable(CallkitIncomingBroadcastReceiver.EXTRA_CALLKIT_HEADERS) as HashMap<String, Any?>
+                        data.getSerializable(CallkitIncomingBroadcastReceiver.EXTRA_CALLKIT_HEADERS) as HashMap<String, Any?>
 
                 getPicassoInstance(context, headers).load(avatarUrl)
-                    .into(targetLoadAvatarDefault)
+                        .into(targetLoadAvatarDefault)
             }
-            val isShowCallback = data.getBoolean(
-                CallkitIncomingBroadcastReceiver.EXTRA_CALLKIT_IS_SHOW_CALLBACK,
-                true
-            )
+            val isShowCallback = data.getBoolean(CallkitIncomingBroadcastReceiver.EXTRA_CALLKIT_IS_SHOW_CALLBACK, true)
             if (isShowCallback) {
                 val textCallback = data.getString(EXTRA_CALLKIT_TEXT_CALLBACK, "")
                 val callbackAction: NotificationCompat.Action = NotificationCompat.Action.Builder(
-                    R.drawable.ic_accept,
-                    if (TextUtils.isEmpty(textCallback)) context.getString(R.string.text_call_back) else textCallback,
-                    getCallbackPendingIntent(notificationId, data)
+                        R.drawable.ic_accept,
+                        if (TextUtils.isEmpty(textCallback)) context.getString(R.string.text_call_back) else textCallback,
+                        getCallbackPendingIntent(notificationId, data)
                 ).build()
                 notificationBuilder.addAction(callbackAction)
             }
@@ -358,19 +353,18 @@ class CallkitNotificationManager(private val context: Context) {
         missedCallChannelName: String,
     ) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            var channelCall =
-                getNotificationManager().getNotificationChannel(NOTIFICATION_CHANNEL_ID_INCOMING)
+            var channelCall = getNotificationManager().getNotificationChannel(NOTIFICATION_CHANNEL_ID_INCOMING)
             if (channelCall != null) {
                 channelCall.setSound(null, null)
             } else {
                 channelCall = NotificationChannel(
-                    NOTIFICATION_CHANNEL_ID_INCOMING,
-                    incomingCallChannelName,
-                    NotificationManager.IMPORTANCE_HIGH
+                        NOTIFICATION_CHANNEL_ID_INCOMING,
+                        incomingCallChannelName,
+                        NotificationManager.IMPORTANCE_HIGH
                 ).apply {
                     description = ""
                     vibrationPattern =
-                        longArrayOf(0, 1000, 500, 1000, 500)
+                            longArrayOf(0, 1000, 500, 1000, 500)
                     lightColor = Color.RED
                     enableLights(true)
                     enableVibration(true)
@@ -384,9 +378,9 @@ class CallkitNotificationManager(private val context: Context) {
             getNotificationManager().createNotificationChannel(channelCall)
 
             val channelMissedCall = NotificationChannel(
-                NOTIFICATION_CHANNEL_ID_MISSED,
-                missedCallChannelName,
-                NotificationManager.IMPORTANCE_DEFAULT
+                    NOTIFICATION_CHANNEL_ID_MISSED,
+                    missedCallChannelName,
+                    NotificationManager.IMPORTANCE_DEFAULT
             ).apply {
                 description = ""
                 vibrationPattern = longArrayOf(0, 1000)
@@ -400,24 +394,23 @@ class CallkitNotificationManager(private val context: Context) {
     }
 
     private fun getAcceptPendingIntent(id: Int, data: Bundle): PendingIntent {
-        val intent =
-            context.packageManager.getLaunchIntentForPackage(context.packageName)?.cloneFilter()
+        val intent = context.packageManager.getLaunchIntentForPackage(context.packageName)?.cloneFilter()
         intent?.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         if (intent != null) {
             val intentTransparent = TransparentActivity.getIntentAccept(context, data)
             return PendingIntent.getActivities(
-                context,
-                id,
-                arrayOf(intent, intentTransparent),
-                getFlagPendingIntent()
+                    context,
+                    id,
+                    arrayOf(intent, intentTransparent),
+                    getFlagPendingIntent()
             )
         } else {
             val acceptIntent = CallkitIncomingBroadcastReceiver.getIntentAccept(context, data)
             return PendingIntent.getBroadcast(
-                context,
-                id,
-                acceptIntent,
-                getFlagPendingIntent()
+                    context,
+                    id,
+                    acceptIntent,
+                    getFlagPendingIntent()
             )
         }
     }
@@ -425,42 +418,41 @@ class CallkitNotificationManager(private val context: Context) {
     private fun getDeclinePendingIntent(id: Int, data: Bundle): PendingIntent {
         val declineIntent = CallkitIncomingBroadcastReceiver.getIntentDecline(context, data)
         return PendingIntent.getBroadcast(
-            context,
-            id,
-            declineIntent,
-            getFlagPendingIntent()
+                context,
+                id,
+                declineIntent,
+                getFlagPendingIntent()
         )
     }
 
     private fun getTimeOutPendingIntent(id: Int, data: Bundle): PendingIntent {
         val timeOutIntent = CallkitIncomingBroadcastReceiver.getIntentTimeout(context, data)
         return PendingIntent.getBroadcast(
-            context,
-            id,
-            timeOutIntent,
-            getFlagPendingIntent()
+                context,
+                id,
+                timeOutIntent,
+                getFlagPendingIntent()
         )
     }
 
     private fun getCallbackPendingIntent(id: Int, data: Bundle): PendingIntent {
-        val intent =
-            context.packageManager.getLaunchIntentForPackage(context.packageName)?.cloneFilter()
+        val intent = context.packageManager.getLaunchIntentForPackage(context.packageName)?.cloneFilter()
         intent?.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         if (intent != null) {
             val intentTransparent = TransparentActivity.getIntentCallback(context, data)
             return PendingIntent.getActivities(
-                context,
-                id,
-                arrayOf(intent, intentTransparent),
-                getFlagPendingIntent()
+                    context,
+                    id,
+                    arrayOf(intent, intentTransparent),
+                    getFlagPendingIntent()
             )
         } else {
             val acceptIntent = CallkitIncomingBroadcastReceiver.getIntentCallback(context, data)
             return PendingIntent.getBroadcast(
-                context,
-                id,
-                acceptIntent,
-                getFlagPendingIntent()
+                    context,
+                    id,
+                    acceptIntent,
+                    getFlagPendingIntent()
             )
         }
     }
@@ -491,17 +483,17 @@ class CallkitNotificationManager(private val context: Context) {
 
     private fun getPicassoInstance(context: Context, headers: HashMap<String, Any?>): Picasso {
         val client = OkHttpClient.Builder()
-            .addNetworkInterceptor { chain ->
-                val newRequestBuilder: okhttp3.Request.Builder = chain.request().newBuilder()
-                for ((key, value) in headers) {
-                    newRequestBuilder.addHeader(key, value.toString())
+                .addNetworkInterceptor { chain ->
+                    val newRequestBuilder: okhttp3.Request.Builder = chain.request().newBuilder()
+                    for ((key, value) in headers) {
+                        newRequestBuilder.addHeader(key, value.toString())
+                    }
+                    chain.proceed(newRequestBuilder.build())
                 }
-                chain.proceed(newRequestBuilder.build())
-            }
-            .build()
+                .build()
         return Picasso.Builder(context)
-            .downloader(OkHttp3Downloader(client))
-            .build()
+                .downloader(OkHttp3Downloader(client))
+                .build()
     }
 
 
