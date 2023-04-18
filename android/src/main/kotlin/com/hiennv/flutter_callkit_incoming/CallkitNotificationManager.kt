@@ -189,10 +189,6 @@ class CallkitNotificationManager(private val context: Context) {
     }
 
     private fun initNotificationViews(remoteViews: RemoteViews, data: Bundle) {
-        remoteViews.setTextViewText(
-            R.id.tvNumber,
-            data.getString(EXTRA_CALLKIT_HANDLE, "")
-        )
         remoteViews.setOnClickPendingIntent(
             R.id.llDecline,
             getDeclinePendingIntent(notificationId, data)
@@ -251,10 +247,6 @@ class CallkitNotificationManager(private val context: Context) {
         if (isCustomNotification) {
             notificationViews =
                 RemoteViews(context.packageName, R.layout.layout_custom_miss_notification)
-            notificationViews?.setTextViewText(
-                R.id.tvNumber,
-                data.getString(EXTRA_CALLKIT_HANDLE, "")
-            )
             notificationViews?.setOnClickPendingIntent(
                 R.id.llCallback,
                 getCallbackPendingIntent(notificationId, data)
