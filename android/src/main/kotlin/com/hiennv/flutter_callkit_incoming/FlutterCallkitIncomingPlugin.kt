@@ -212,6 +212,7 @@ class FlutterCallkitIncomingPlugin : FlutterPlugin, MethodCallHandler, ActivityA
                     context?.sendBroadcast(
                         CallkitIncomingBroadcastReceiver.getIntentCloseIncomingCallScreen(
                             requireNotNull(context),
+                            null
                         )
                     )
                     result.success("OK")
