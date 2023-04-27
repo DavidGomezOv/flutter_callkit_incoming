@@ -106,23 +106,25 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                 putExtra(EXTRA_CALLKIT_INCOMING_DATA, data)
             }
 
-        fun getIntentCloseIncomingCallScreen(context: Context) =
+        fun getIntentCloseIncomingCallScreen(context: Context, data: Bundle?) =
             Intent(context, CallkitIncomingBroadcastReceiver::class.java).apply {
                 println("DDD INTENT CALL")
                 action = "${context.packageName}.${ACTION_CLOSE_INCOMING_CALL_SCREEN}"
+                putExtra(EXTRA_CALLKIT_INCOMING_DATA, data)
             }
     }
 
 
     @SuppressLint("MissingPermission")
     override fun onReceive(context: Context, intent: Intent) {
+        println("DDD ENTRO AL ACTION")
         val callkitNotificationManager = CallkitNotificationManager(context)
         val action = intent.action ?: return
-        val data = intent.extras?.getBundle(EXTRA_CALLKIT_INCOMING_DATA) ?: return
+        val data = intent.extras?.getBundle(EXTRA_CALLKIT_INCOMING_DATA)
         when (action) {
             "${context.packageName}.${ACTION_CALL_INCOMING}" -> {
                 try {
-                    callkitNotificationManager.showIncomingNotification(data)
+                    callkitNotificationManager.showIncomingNotification(data!!)
                     sendEventFlutter(ACTION_CALL_INCOMING, data)
                     addCall(context, Data.fromBundle(data))
 
@@ -139,7 +141,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
 
             "${context.packageName}.${ACTION_CALL_START}" -> {
                 try {
-                    sendEventFlutter(ACTION_CALL_START, data)
+                    sendEventFlutter(ACTION_CALL_START, data!!)
                     addCall(context, Data.fromBundle(data), true)
                 } catch (error: Exception) {
                     error.printStackTrace()
@@ -148,7 +150,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
 
             "${context.packageName}.${ACTION_CALL_ACCEPT}" -> {
                 try {
-                    sendEventFlutter(ACTION_CALL_ACCEPT, data)
+                    sendEventFlutter(ACTION_CALL_ACCEPT, data!!)
                     context.stopService(Intent(context, CallkitSoundPlayerService::class.java))
                     callkitNotificationManager.clearIncomingNotification(data)
                     addCall(context, Data.fromBundle(data), true)
@@ -159,7 +161,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
 
             "${context.packageName}.${ACTION_CALL_DECLINE}" -> {
                 try {
-                    sendEventFlutter(ACTION_CALL_DECLINE, data)
+                    sendEventFlutter(ACTION_CALL_DECLINE, data!!)
                     context.stopService(Intent(context, CallkitSoundPlayerService::class.java))
                     callkitNotificationManager.clearIncomingNotification(data)
                     removeCall(context, Data.fromBundle(data))
@@ -170,7 +172,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
 
             "${context.packageName}.${ACTION_CALL_ENDED}" -> {
                 try {
-                    sendEventFlutter(ACTION_CALL_ENDED, data)
+                    sendEventFlutter(ACTION_CALL_ENDED, data!!)
                     context.stopService(Intent(context, CallkitSoundPlayerService::class.java))
 
                     callkitNotificationManager.clearIncomingNotification(data)
@@ -182,7 +184,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
 
             "${context.packageName}.${ACTION_CALL_TIMEOUT}" -> {
                 try {
-                    sendEventFlutter(ACTION_CALL_TIMEOUT, data)
+                    sendEventFlutter(ACTION_CALL_TIMEOUT, data!!)
                     context.stopService(Intent(context, CallkitSoundPlayerService::class.java))
                     if (data.getBoolean(EXTRA_CALLKIT_IS_SHOW_MISSED_CALL_NOTIFICATION, true)) {
                         callkitNotificationManager.showMissCallNotification(data)
@@ -195,7 +197,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
 
             "${context.packageName}.${ACTION_CALL_CALLBACK}" -> {
                 try {
-                    callkitNotificationManager.clearMissCallNotification(data)
+                    callkitNotificationManager.clearMissCallNotification(data!!)
                     sendEventFlutter(ACTION_CALL_CALLBACK, data)
                     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
                         val closeNotificationPanel = Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
