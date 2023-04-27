@@ -108,6 +108,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
 
         fun getIntentCloseIncomingCallScreen(context: Context) =
             Intent(context, CallkitIncomingBroadcastReceiver::class.java).apply {
+                println("DDD INTENT CALL")
                 action = "${context.packageName}.${ACTION_CLOSE_INCOMING_CALL_SCREEN}"
             }
     }
@@ -206,7 +207,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
             }
 
             "${context.packageName}.${ACTION_CLOSE_INCOMING_CALL_SCREEN}" -> {
-                println("ACTION_CLOSE_INCOMING_CALL_SCREEN")
+                println("DDD ACTION_CLOSE_INCOMING_CALL_SCREEN")
                 try {
                     callkitNotificationManager.closeIncomingCallScreen()
                 } catch (error: Exception) {
