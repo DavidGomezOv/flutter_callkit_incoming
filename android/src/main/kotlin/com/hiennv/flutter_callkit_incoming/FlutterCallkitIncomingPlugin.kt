@@ -207,6 +207,15 @@ class FlutterCallkitIncomingPlugin : FlutterPlugin, MethodCallHandler, ActivityA
                 "getDevicePushTokenVoIP" -> {
                     result.success("")
                 }
+                "closeIncomingCallScreen" -> {
+                    //send BroadcastReceiver
+                    context?.sendBroadcast(
+                        CallkitIncomingBroadcastReceiver.getIntentCloseIncomingCallScreen(
+                            requireNotNull(context),
+                        )
+                    )
+                    result.success("OK")
+                }
             }
         } catch (error: Exception) {
             result.error("error", error.message, "")

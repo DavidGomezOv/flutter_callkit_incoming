@@ -56,6 +56,7 @@ class CallkitNotificationManager(private val context: Context) {
     private var notificationViews: RemoteViews? = null
     private var notificationSmallViews: RemoteViews? = null
     private var notificationId: Int = 9696
+    private var isScreenOpen: Boolean = false
 
     private var targetLoadAvatarDefault = object : Target {
         override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
@@ -252,6 +253,10 @@ class CallkitNotificationManager(private val context: Context) {
                         channel != null &&
                         channel.importance > NotificationManagerCompat.IMPORTANCE_NONE) ||
                 Build.VERSION.SDK_INT < Build.VERSION_CODES.O
+    }
+
+    fun closeIncomingCallScreen() {
+        CallkitIncomingActivity().closeIncomingCallScreen()
     }
 
     private fun createNotificationChanel(

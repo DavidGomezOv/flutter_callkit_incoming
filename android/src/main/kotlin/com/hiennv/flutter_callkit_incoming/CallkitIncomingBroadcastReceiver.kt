@@ -13,6 +13,8 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
 
         const val ACTION_CALL_INCOMING =
                 "com.hiennv.flutter_callkit_incoming.ACTION_CALL_INCOMING"
+        const val ACTION_CLOSE_INCOMING_CALL_SCREEN =
+            "com.hiennv.flutter_callkit_incoming.ACTION_CLOSE_INCOMING_CALL_SCREEN"
         const val ACTION_CALL_START = "com.hiennv.flutter_callkit_incoming.ACTION_CALL_START"
         const val ACTION_CALL_ACCEPT =
                 "com.hiennv.flutter_callkit_incoming.ACTION_CALL_ACCEPT"
@@ -76,6 +78,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                     putExtra(EXTRA_CALLKIT_INCOMING_DATA, data)
                 }
 
+
         fun getIntentDecline(context: Context, data: Bundle?) =
                 Intent(context, CallkitIncomingBroadcastReceiver::class.java).apply {
                     action = "${context.packageName}.${ACTION_CALL_DECLINE}"
@@ -99,6 +102,11 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                     action = "${context.packageName}.${ACTION_CALL_CALLBACK}"
                     putExtra(EXTRA_CALLKIT_INCOMING_DATA, data)
                 }
+
+        fun getIntentCloseIncomingCallScreen(context: Context) =
+            Intent(context, CallkitIncomingBroadcastReceiver::class.java).apply {
+                action = "${context.packageName}.${ACTION_CLOSE_INCOMING_CALL_SCREEN}"
+            }
     }
 
 
@@ -156,6 +164,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                 try {
                     sendEventFlutter(ACTION_CALL_ENDED, data)
                     context.stopService(Intent(context, CallkitSoundPlayerService::class.java))
+
                     callkitNotificationManager.clearIncomingNotification(data)
                     removeCall(context, Data.fromBundle(data))
                 } catch (error: Exception) {
@@ -182,6 +191,13 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                         val closeNotificationPanel = Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
                         context.sendBroadcast(closeNotificationPanel)
                     }
+                } catch (error: Exception) {
+                    error.printStackTrace()
+                }
+            }
+            "${context.packageName}.${ACTION_CLOSE_INCOMING_CALL_SCREEN}" -> {
+                try {
+                    callkitNotificationManager.closeIncomingCallScreen()
                 } catch (error: Exception) {
                     error.printStackTrace()
                 }

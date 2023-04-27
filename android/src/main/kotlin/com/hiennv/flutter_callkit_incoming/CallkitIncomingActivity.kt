@@ -117,6 +117,14 @@ class CallkitIncomingActivity : Activity() {
         )
     }
 
+    fun closeIncomingCallScreen() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            finishAndRemoveTask()
+        } else {
+            finish()
+        }
+    }
+
     private fun wakeLockRequest(duration: Long) {
 
         val pm = applicationContext.getSystemService(POWER_SERVICE) as PowerManager
