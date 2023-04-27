@@ -256,7 +256,13 @@ class CallkitNotificationManager(private val context: Context) {
     }
 
     fun closeIncomingCallScreen() {
-        CallkitIncomingActivity().closeIncomingCallScreen()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            println("DDD ACTION_CLOSE_INCOMING_CALL_SCREEN MANAGER 1")
+            CallkitIncomingActivity.IncomingActivityClass.activity?.finishAndRemoveTask()
+        } else {
+            println("DDD ACTION_CLOSE_INCOMING_CALL_SCREEN MANAGER 2")
+            CallkitIncomingActivity.IncomingActivityClass.activity?.finish()
+        }
     }
 
     private fun createNotificationChanel(

@@ -116,6 +116,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
 
     @SuppressLint("MissingPermission")
     override fun onReceive(context: Context, intent: Intent) {
+        println("DDD ENTRA ON RECEIVER")
         val callkitNotificationManager = CallkitNotificationManager(context)
         val action = intent.action ?: return
         val data = intent.extras?.getBundle(EXTRA_CALLKIT_INCOMING_DATA)
@@ -207,6 +208,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
             }
 
             "${context.packageName}.${ACTION_CLOSE_INCOMING_CALL_SCREEN}" -> {
+                println("DDD RECEIVER")
                 try {
                     callkitNotificationManager.closeIncomingCallScreen()
                 } catch (error: Exception) {

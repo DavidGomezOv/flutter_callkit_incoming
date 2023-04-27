@@ -66,6 +66,13 @@ class CallkitIncomingActivity : Activity() {
 
     }
 
+    class IncomingActivityClass {
+        companion object {
+            @SuppressLint("StaticFieldLeak")
+            var activity: Activity? = null
+        }
+    }
+
     inner class EndedCallkitIncomingBroadcastReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (!isFinishing) {
@@ -107,6 +114,7 @@ class CallkitIncomingActivity : Activity() {
             window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
             window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD)
         }
+        IncomingActivityClass.activity = this@CallkitIncomingActivity
         transparentStatusAndNavigation()
         setContentView(R.layout.activity_callkit_incoming)
         initView()
