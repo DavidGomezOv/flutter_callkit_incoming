@@ -208,7 +208,6 @@ class FlutterCallkitIncomingPlugin : FlutterPlugin, MethodCallHandler, ActivityA
                     result.success("")
                 }
                 "closeIncomingCallScreen" -> {
-                    println("DDD SEND TO BROADCAST")
                     context?.sendBroadcast(
                         CallkitIncomingBroadcastReceiver.getIntentCloseIncomingCallScreen(
                             requireNotNull(context),
