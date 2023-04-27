@@ -81,6 +81,11 @@ class FlutterCallkitIncoming {
     return await _channel.invokeMethod("getDevicePushTokenVoIP");
   }
 
+  /// Remove the incoming screen.
+  static Future closeIncomingCallScreen() async {
+    return await _channel.invokeMethod("closeIncomingCallScreen");
+  }
+
   static CallEvent? _receiveCallEvent(dynamic data) {
     Event? event;
     Map<String, dynamic> body = {};
