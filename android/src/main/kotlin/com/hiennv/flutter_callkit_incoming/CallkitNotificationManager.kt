@@ -256,7 +256,11 @@ class CallkitNotificationManager(private val context: Context) {
     }
 
     fun closeIncomingCallScreen() {
-        CallkitIncomingActivity().closeIncomingCallScreen()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            CallkitIncomingActivity.IncomingActivityClass.activity?.finishAndRemoveTask()
+        } else {
+            CallkitIncomingActivity.IncomingActivityClass.activity?.finish()
+        }
     }
 
     private fun createNotificationChanel(
