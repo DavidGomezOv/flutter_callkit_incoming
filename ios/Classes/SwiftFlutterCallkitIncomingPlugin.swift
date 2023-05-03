@@ -73,7 +73,7 @@ public class SwiftFlutterCallkitIncomingPlugin: NSObject, FlutterPlugin, CXProvi
             }
             if let getArgs = args as? [String: Any] {
                 self.data = Data(args: getArgs)
-                showCallkitIncoming(self.data!, fromPushKit: false)
+                showCallkitIncoming(self.data!, fromPushKit: false, completion: () -> Void)
             }
             result("OK")
             break
