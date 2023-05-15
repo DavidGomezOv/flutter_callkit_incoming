@@ -145,7 +145,11 @@ class CallkitNotificationManager(private val context: Context) {
                     "Samsung",
                     ignoreCase = true
                 ) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) || isCustomSmallExNotification
-                || Build.MANUFACTURER.contains(
+            ) {
+                notificationSmallViews =
+                    RemoteViews(context.packageName, R.layout.layout_custom_small_ex_notification)
+                initNotificationViews(notificationSmallViews!!, data)
+            } else if (Build.MANUFACTURER.contains(
                     "Xiaomi",
                     ignoreCase = true
                 ) || Build.MANUFACTURER.contains(
@@ -154,7 +158,7 @@ class CallkitNotificationManager(private val context: Context) {
                 )
             ) {
                 notificationSmallViews =
-                    RemoteViews(context.packageName, R.layout.layout_custom_small_ex_notification)
+                    RemoteViews(context.packageName, R.layout.layout_custom_xiaomi_notification)
                 initNotificationViews(notificationSmallViews!!, data)
             } else {
                 notificationSmallViews =
